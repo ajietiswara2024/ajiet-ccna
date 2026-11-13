@@ -88,8 +88,8 @@ export const Scene1Opening: React.FC = () => {
     frame,
     [0, 50, 108, 236],
     [
-      [0.2, 3.9, 7.3],
-      [0.45, 3.1, 6.2],
+      [0.2, 5.3, 6.6],
+      [0.45, 4.2, 5.7],
       [0, 2.45, 6.45],
       [-0.08, 2.42, 6.1],
     ],
@@ -149,7 +149,7 @@ export const Scene1Opening: React.FC = () => {
         <span style={{color: C.blue}}>TAPI AMAN NGGAK?</span>
       </div>
 
-      {frame > 92 ? <SceneTag index={SCENES.opening.index} label={SCENES.opening.tag} delay={96} /> : null}
+      {frame > 92 ? <SceneTag index={SCENES.opening.index} label={SCENES.opening.tag} eyebrow={SCENES.opening.eyebrow} title={SCENES.opening.title} delay={96} /> : null}
 
       {/* Chip kuota sekarat */}
       <Chip t={kuota} style={{top: 250, right: 48}} bg="rgba(255,253,249,0.96)">

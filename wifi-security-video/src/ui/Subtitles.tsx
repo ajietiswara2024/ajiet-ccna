@@ -33,64 +33,90 @@ const Cue: React.FC<{text: string; startF: number; endF: number}> = ({text, star
   const frame = useCurrentFrame();
   const {fps} = useVideoConfig();
   const local = frame - startF;
-  const enter = spring({frame: local, fps, config: {damping: 200, mass: 0.6}});
-  const exit = interpolate(frame, [endF - 6, endF], [1, 0], {...CLAMP, easing: EASE});
+  const enter = spring({frame: local, fps, config: {damping: 200, mass: 0.5}});
+  const exit = interpolate(frame, [endF - 5, endF], [1, 0], {...CLAMP, easing: EASE});
   const words = parseCue(text);
-  const long = text.replace(/\*/g, '').length > 40;
+  // Karaoke: perkiraan waktu tiap kata diucapkan, proporsional jumlah huruf
+  const lens = words.map((w) => w.reduce((n, p) => n + p.t.length, 0) + 1);
+  const total = lens.reduce((a, b) => a + b, 0);
+  const speakDur = Math.max(1, (endF - startF) * 0.82);
+  let acc = 0;
   return (
     <div
       style={{
         opacity: Math.min(enter, exit),
-        transform: `translateY(${(1 - enter) * 26 + (1 - exit) * -10}px) scale(${0.96 + 0.04 * enter})`,
-        maxWidth: 940,
-        padding: '22px 36px 24px',
-        borderRadius: 30,
-        background: 'rgba(30, 32, 38, 0.86)',
-        boxShadow: '0 18px 40px rgba(40, 30, 10, 0.22)',
+        transform: `translateY(${(1 - enter) * 18}px)`,
+        maxWidth: 880,
         textAlign: 'center',
         fontFamily: FONT,
         fontWeight: 700,
-        fontSize: long ? 48 : 54,
-        lineHeight: 1.24,
+        fontSize: 46,
+        lineHeight: 1.62,
         letterSpacing: '-0.01em',
-        color: '#FFFFFF',
       }}
     >
-      <div style={{textWrap: 'balance', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden'}}>
-      {words.map((parts, i) => {
-        const s = spring({frame: local - i * 1.6, fps, config: {damping: 200, mass: 0.5}});
-        return (
-          <React.Fragment key={i}>
-            <span
-              style={{
-                display: 'inline-block',
-                opacity: s,
-                transform: `translateY(${(1 - s) * 16}px)`,
-                filter: `blur(${(1 - s) * 4}px)`,
-              }}
-            >
-              {parts.map((p, k) => (
-                <span key={k} style={p.hl ? {color: C.yellow} : undefined}>
-                  {p.t}
-                </span>
-              ))}
-            </span>
-            {i < words.length - 1 ? ' ' : null}
-          </React.Fragment>
-        );
-      })}
-      </div>
+      <span
+        style={{
+          background: 'rgba(28, 30, 35, 0.92)',
+          color: '#FFFFFF',
+          padding: '5px 16px 7px',
+          borderRadius: 12,
+          WebkitBoxDecorationBreak: 'clone',
+          boxDecorationBreak: 'clone',
+        }}
+      >
+        {words.map((parts, i) => {
+          const at = (acc / total) * speakDur;
+          acc += lens[i];
+          const spoken = interpolate(local, [at - 2, at + 3], [0, 1], CLAMP);
+          return (
+            <React.Fragment key={i}>
+              <span style={{opacity: 0.45 + 0.55 * spoken}}>
+                {parts.map((p, k) => (
+                  <span
+                    key={k}
+                    style={
+                      p.hl
+                        ? {
+                            background: C.yellow,
+                            color: C.ink,
+                            borderRadius: 7,
+                            padding: '0 6px',
+                            margin: '0 -2px',
+                            WebkitBoxDecorationBreak: 'clone',
+                            boxDecorationBreak: 'clone',
+                            ...(k === parts.length - 1 && i < words.length - 1 && words[i + 1][0].hl ? {borderTopRightRadius: 0, borderBottomRightRadius: 0, paddingRight: 0, marginRight: 0} : {}),
+                            ...(k === 0 && i > 0 && words[i - 1][words[i - 1].length - 1].hl ? {borderTopLeftRadius: 0, borderBottomLeftRadius: 0, paddingLeft: 0, marginLeft: 0} : {}),
+                          }
+                        : undefined
+                    }
+                  >
+                    {p.t}
+                  </span>
+                ))}
+              </span>
+              {i < words.length - 1 ? (
+                parts[parts.length - 1].hl && words[i + 1][0].hl ? (
+                  <span style={{background: C.yellow, opacity: 0.45 + 0.55 * spoken}}> </span>
+                ) : (
+                  ' '
+                )
+              ) : null}
+            </React.Fragment>
+          );
+        })}
+      </span>
     </div>
   );
 };
 
-/** Subtitle sinkron narasi, maksimal 2 baris, di area bawah yang aman */
+/** Subtitle sinkron narasi, maksimal 2 baris, kotak per baris (gaya editorial) */
 export const Subtitles: React.FC = () => {
   const frame = useCurrentFrame();
   const {fps} = useVideoConfig();
   const active = SUBTITLES.filter((c) => frame >= Math.round(c.start * fps) && frame < Math.round(c.end * fps));
   return (
-    <AbsoluteFill style={{justifyContent: 'flex-end', alignItems: 'center', paddingBottom: 330, pointerEvents: 'none'}}>
+    <AbsoluteFill style={{justifyContent: 'flex-start', alignItems: 'center', paddingTop: 1250, pointerEvents: 'none'}}>
       {active.map((c) => (
         <Cue key={c.start} text={c.text} startF={Math.round(c.start * fps)} endF={Math.round(c.end * fps)} />
       ))}

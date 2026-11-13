@@ -9,7 +9,8 @@ import {Phone} from '../three/Phone';
 import {CameraRig, Stage3D} from '../three/Stage';
 import {Padlock, Shield, WifiIcon} from '../three/Symbols';
 import {useCanvasTexture} from '../three/useCanvasTexture';
-import {SceneTag} from '../ui/Overlay';
+import {IconLock} from '../ui/Icons';
+import {Checklist, InfoCard, SceneTag} from '../ui/Overlay';
 
 /** Kredit kreator — ubah di sini */
 export const CREDIT = {label: 'Created by', handle: '@andiajietiswaraputra'};
@@ -41,10 +42,10 @@ export const Scene5Closing: React.FC = () => {
     frame,
     [0, 250, 310, 393],
     [
-      [0, 2.25, 6.7],
-      [0.55, 2.45, 6.3],
-      [0.2, 2.9, 8.6],
-      [0.1, 3.0, 9.0],
+      [0, 2.85, 6.7],
+      [0.55, 3.05, 6.3],
+      [0.2, 3.5, 8.6],
+      [0.1, 3.6, 9.0],
     ],
   );
   const target = kf(
@@ -82,7 +83,17 @@ export const Scene5Closing: React.FC = () => {
       </AbsoluteFill>
 
       <div style={{opacity: 1 - outro}}>
-        <SceneTag index={SCENES.closing.index} label={SCENES.closing.tag} delay={10} />
+        <InfoCard t={prog(frame, 6, 14)} eyebrow="Cek sebelum terhubung · 3 hal" style={{top: 290, left: 64}}>
+          <Checklist
+            items={[
+              <>nama Wi-Fi <b style={{background: C.yellow, borderRadius: 6, padding: '0 6px'}}>benar</b></>,
+              <>jangan isi data pribadi</>,
+              <>situs pakai <b>HTTPS</b> <IconLock size={26} color={C.ink} style={{verticalAlign: '-3px'}} /></>,
+            ]}
+            active={[prog(frame, T.check1, 10), prog(frame, T.check2, 10), prog(frame, T.check3, 10)]}
+          />
+        </InfoCard>
+        <SceneTag index={SCENES.closing.index} label={SCENES.closing.tag} eyebrow={SCENES.closing.eyebrow} title={SCENES.closing.title} delay={10} />
       </div>
 
       {/* Tipografi judul akhir */}

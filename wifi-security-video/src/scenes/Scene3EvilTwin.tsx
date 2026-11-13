@@ -13,7 +13,7 @@ import {CameraRig, Stage3D} from '../three/Stage';
 import {WifiIcon} from '../three/Symbols';
 import {useCanvasTexture} from '../three/useCanvasTexture';
 import {IconCheck, IconCross} from '../ui/Icons';
-import {Chip, SceneTag} from '../ui/Overlay';
+import {Chip, InfoCard, Pill, SceneTag} from '../ui/Overlay';
 
 export const REAL_SSID = 'KafeKopi_Free';
 export const FAKE_SSID = 'KafeKop1_Free';
@@ -84,13 +84,13 @@ export const Scene3EvilTwin: React.FC = () => {
     frame,
     [0, 80, 240, 300, 336, 376, 518],
     [
-      [0, 2.5, 7.0],
-      [0, 2.8, 11.0],
-      [0, 2.85, 11.2],
-      [0.55, 3.2, 12.0],
-      [0.55, 3.2, 12.0],
-      [0.3, 3.3, 10.9],
-      [0.25, 3.25, 10.6],
+      [0, 4.3, 7.0],
+      [0, 4.6, 11.0],
+      [0, 4.65, 11.2],
+      [0.55, 5.0, 12.0],
+      [0.55, 5.0, 12.0],
+      [0.3, 5.1, 10.9],
+      [0.25, 5.05, 10.6],
     ],
   );
   const target = kf(
@@ -120,8 +120,8 @@ export const Scene3EvilTwin: React.FC = () => {
   ];
 
   // overlay
-  const headline = window01(frame, T.evilTwin, T.evilTwin + 10, T.compare + 60, T.compare + 76);
-  const cards = window01(frame, T.compare + 4, T.compare + 18, T.phoneIn - 14, T.phoneIn);
+  const headline = window01(frame, T.evilTwin, T.evilTwin + 10, T.compare, T.compare + 8);
+  const cards = window01(frame, T.compare + 8, T.compare + 20, T.phoneIn - 14, T.phoneIn);
   const think = window01(frame, T.phoneIn + 8, T.phoneIn + 20, T.reality - 4, T.reality + 4);
   const real = spring({frame: frame - T.reality - 4, fps, config: {damping: 14, mass: 0.7}});
 
@@ -170,46 +170,36 @@ export const Scene3EvilTwin: React.FC = () => {
         <FlowLine points={toFake} frame={frame} progress={prog(frame, T.connected - 6, 20)} lineOpacity={0} pulseColor={C.orange} pulses={4} speed={0.022} />
       </Stage3D>
 
-      <SceneTag index={SCENES.evilTwin.index} label={SCENES.evilTwin.tag} delay={10} color={C.orange} />
+      <SceneTag index={SCENES.evilTwin.index} label={SCENES.evilTwin.tag} eyebrow={SCENES.evilTwin.eyebrow} title={SCENES.evilTwin.title} delay={10} color={C.orange} />
 
-      {/* Headline EVIL TWIN dengan efek glitch */}
-      <div
-        style={{
-          position: 'absolute',
-          top: 270,
-          left: 0,
-          right: 0,
-          textAlign: 'center',
-          fontFamily: FONT,
-          fontWeight: 800,
-          fontSize: 140,
-          letterSpacing: '-0.03em',
-          lineHeight: 1,
-          opacity: headline,
-          transform: `scale(${0.9 + 0.1 * headline})`,
-        }}
-      >
-        <span style={{position: 'absolute', left: 0, right: 0, color: C.blue, opacity: 0.55, transform: `translate(${glitch ? -10 : -4}px, 2px)`}}>EVIL TWIN</span>
-        <span style={{position: 'relative', color: C.orange, transform: `translate(${glitch ? 8 : 0}px, 0)`, display: 'inline-block'}}>EVIL TWIN</span>
-        <div style={{fontSize: 36, fontWeight: 700, color: C.inkSoft, marginTop: 18, letterSpacing: 0}}>Wi-Fi palsu yang meniru Wi-Fi asli</div>
-      </div>
+      {/* Kartu definisi Evil Twin */}
+      <InfoCard t={headline} eyebrow="Evil twin · definisi" style={{top: 290, left: 64, right: 64}}>
+        <div style={{fontSize: 36, fontWeight: 800, lineHeight: 1.25}}>
+          Wi-Fi palsu yang <span style={{background: C.yellow, borderRadius: 8, padding: '0 8px'}}>meniru</span> nama Wi-Fi asli
+        </div>
+        <div style={{marginTop: 14, display: 'flex', gap: 12, transform: `translateX(${glitch ? 6 : 0}px)`}}>
+          <Pill color="white">{REAL_SSID}</Pill>
+          <span style={{fontSize: 30, fontWeight: 800, color: C.gray}}>≈</span>
+          <Pill color="orange">{FAKE_SSID}</Pill>
+        </div>
+      </InfoCard>
 
       {/* Kartu perbandingan nama jaringan */}
-      <div style={{position: 'absolute', top: 1110, left: 48, right: 48, display: 'flex', gap: 24, opacity: cards, transform: `translateY(${(1 - cards) * 30}px)`}}>
+      <div style={{position: 'absolute', top: 290, left: 64, right: 64, display: 'flex', gap: 20, opacity: cards, transform: `translateY(${(1 - cards) * 30}px)`}}>
         {[
           {title: 'ASLI', ssid: REAL_SSID, color: C.blue, Icon: IconCheck},
           {title: 'PALSU', ssid: FAKE_SSID, color: C.orange, Icon: IconCross},
         ].map(({title, ssid, color, Icon}, i) => {
           const mark = prog(frame, T.compare + 50 + i * 6, 14);
           return (
-            <div key={title} style={{flex: 1, background: 'rgba(255,253,249,0.96)', borderRadius: 30, padding: '22px 26px', boxShadow: '0 16px 36px rgba(60,45,20,0.14)', fontFamily: FONT}}>
+            <div key={title} style={{flex: 1, background: '#FFFEFB', borderRadius: 18, border: '2px solid rgba(34,37,43,0.82)', padding: '18px 22px', boxShadow: '0 10px 28px rgba(60,50,30,0.10)', fontFamily: FONT}}>
               <div style={{display: 'flex', alignItems: 'center', gap: 12, fontWeight: 800, fontSize: 30, color}}>
                 <div style={{width: 46, height: 46, borderRadius: 23, background: color, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                   <Icon size={30} />
                 </div>
                 {title}
               </div>
-              <div style={{fontFamily: MONO, fontWeight: 700, fontSize: 37, color: C.ink, marginTop: 14, whiteSpace: 'nowrap'}}>
+              <div style={{fontFamily: MONO, fontWeight: 700, fontSize: 34, color: C.ink, marginTop: 12, whiteSpace: 'nowrap'}}>
                 {ssid.split('').map((ch, k) =>
                   k === 7 ? (
                     <span key={k} style={{background: `rgba(${i ? '240,122,46' : '246,195,67'},${0.45 * mark})`, borderRadius: 8, boxShadow: `0 0 0 ${3 * mark}px ${i ? C.orange : C.yellow}`}}>
@@ -226,7 +216,7 @@ export const Scene3EvilTwin: React.FC = () => {
       </div>
 
       {/* "Kamu kira" vs "Ternyata" */}
-      <Chip t={think} style={{top: 270, left: 0, right: 0, margin: '0 auto', width: 'fit-content'}}>
+      <Chip t={think} style={{top: 290, left: 64}}>
         <div style={{width: 50, height: 50, borderRadius: 25, background: C.blue, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
           <IconCheck size={32} />
         </div>
@@ -234,7 +224,7 @@ export const Scene3EvilTwin: React.FC = () => {
           Kamu kira: <span style={{color: C.blue}}>Wi-Fi kafe</span>
         </span>
       </Chip>
-      <Chip t={real} style={{top: 270, left: 0, right: 0, margin: '0 auto', width: 'fit-content'}} bg={C.orange} color="#fff">
+      <Chip t={real} style={{top: 290, left: 64}} bg={C.orange} color="#fff">
         <div style={{width: 50, height: 50, borderRadius: 25, background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
           <IconCross size={32} color={C.orange} />
         </div>

@@ -13,7 +13,7 @@ loadFont({family: MONO, url: staticFile('fonts/JetBrainsMono.woff2'), weight: '1
 
 /** Palet warna: beige / cream / off-white + aksen biru, kuning, oranye, abu-abu */
 export const C = {
-  bg: '#EDE4D6', // beige studio
+  bg: '#ECE8E1', // off-white hangat (high-key studio)
   cream: '#F5EEE2',
   offWhite: '#FBF8F2',
   paper: '#FFFDF9',

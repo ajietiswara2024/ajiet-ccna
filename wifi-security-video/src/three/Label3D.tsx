@@ -7,7 +7,7 @@ import type {V3} from '../lib/anim';
 type Variant = 'light' | 'blue' | 'orange' | 'dark' | 'yellow';
 
 const STYLES: Record<Variant, {bg: string; fg: string; dot: string}> = {
-  light: {bg: '#FFFDF9', fg: C.ink, dot: C.blue},
+  light: {bg: '#FFFEFB', fg: C.ink, dot: C.blue},
   blue: {bg: C.blue, fg: '#FFFFFF', dot: '#FFFFFF'},
   orange: {bg: C.orange, fg: '#FFFFFF', dot: '#FFFFFF'},
   dark: {bg: C.ink, fg: '#FFFFFF', dot: C.yellow},
@@ -40,14 +40,15 @@ export const Label3D: React.FC<{
     c.width = W + 20;
     c.height = H + 20;
     ctx.translate(10, 10);
-    ctx.shadowColor = 'rgba(40,30,10,0.18)';
-    ctx.shadowBlur = 10;
-    ctx.shadowOffsetY = 3;
     ctx.fillStyle = st.bg;
     ctx.beginPath();
-    ctx.roundRect(0, 0, W, H, H / 2);
+    ctx.roundRect(3, 3, W - 6, H - 6, H / 2);
     ctx.fill();
-    ctx.shadowColor = 'transparent';
+    if (variant === 'light' || variant === 'yellow') {
+      ctx.strokeStyle = 'rgba(34,37,43,0.85)';
+      ctx.lineWidth = 6;
+      ctx.stroke();
+    }
     const x0 = 50;
     if (icon === 'dot') {
       ctx.fillStyle = hexA(st.dot, 0.25);

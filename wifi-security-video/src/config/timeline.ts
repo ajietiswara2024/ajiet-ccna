@@ -12,12 +12,12 @@ export const sec = (s: number) => Math.round(s * FPS);
 
 export type SceneId = 'opening' | 'network' | 'evilTwin' | 'https' | 'closing';
 
-export const SCENES: Record<SceneId, {start: number; end: number; tag: string; index: number}> = {
-  opening: {start: 0, end: 7.4, tag: 'Wi-Fi Gratis di Kafe', index: 1},
-  network: {start: 7.4, end: 20.6, tag: 'Cara Kerja Wi-Fi', index: 2},
-  evilTwin: {start: 20.6, end: 37.4, tag: 'Evil Twin', index: 3},
-  https: {start: 37.4, end: 46.9, tag: 'HTTPS & Enkripsi', index: 4},
-  closing: {start: 46.9, end: 60, tag: 'Tips Aman', index: 5},
+export const SCENES: Record<SceneId, {start: number; end: number; tag: string; index: number; eyebrow: string; title: string}> = {
+  opening: {start: 0, end: 7.4, tag: 'Wi-Fi Gratis di Kafe', index: 1, eyebrow: 'Wi-Fi gratis', title: 'kuota sekarat'},
+  network: {start: 7.4, end: 20.6, tag: 'Cara Kerja Wi-Fi', index: 2, eyebrow: 'Cara kerja Wi-Fi', title: 'siapa penyedianya?'},
+  evilTwin: {start: 20.6, end: 37.4, tag: 'Evil Twin', index: 3, eyebrow: 'Evil twin', title: 'kembar, tapi palsu'},
+  https: {start: 37.4, end: 46.9, tag: 'HTTPS & Enkripsi', index: 4, eyebrow: 'HTTPS', title: 'isinya terenkripsi'},
+  closing: {start: 46.9, end: 60, tag: 'Tips Aman', index: 5, eyebrow: 'Tips aman', title: 'sebelum terhubung'},
 };
 
 export const TOTAL_SECONDS = 60;

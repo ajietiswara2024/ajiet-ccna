@@ -94,11 +94,11 @@ export const Scene4Https: React.FC = () => {
 
   const cam = kf(
     frame,
-    [0, 110, 300],
+    [0, 111.2, 300],
     [
-      [-0.3, 2.85, 9.2],
-      [0.0, 2.95, 8.9],
-      [0.45, 3.05, 8.5],
+      [-0.3, 4.05, 9.2],
+      [0.0, 4.15, 8.9],
+      [0.45, 4.25, 8.5],
     ],
   );
   const target = kf(
@@ -164,9 +164,9 @@ export const Scene4Https: React.FC = () => {
         )}
       </Stage3D>
 
-      <SceneTag index={SCENES.https.index} label={SCENES.https.tag} delay={10} />
+      <SceneTag index={SCENES.https.index} label={SCENES.https.tag} eyebrow={SCENES.https.eyebrow} title={SCENES.https.title} delay={10} />
 
-      <Chip t={httpsChip} style={{top: 270, left: 0, right: 0, margin: '0 auto', width: 'fit-content'}} bg={C.blue} color="#fff">
+      <Chip t={httpsChip} style={{top: 290, left: 64}} bg={C.blue} color="#fff">
         <div style={{width: 52, height: 52, borderRadius: 16, background: C.yellow, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
           <IconLock size={32} color={C.ink} />
         </div>
@@ -175,7 +175,7 @@ export const Scene4Https: React.FC = () => {
         </span>
       </Chip>
 
-      <Chip t={spyChip} style={{top: 1130, left: 0, right: 0, margin: '0 auto', width: 'fit-content', flexDirection: 'column', alignItems: 'flex-start', gap: 10}} bg="rgba(34,37,43,0.94)" color="#fff">
+      <Chip t={spyChip} style={{top: 1000, left: 64, flexDirection: 'column', alignItems: 'flex-start', gap: 10}} bg="rgba(34,37,43,0.94)" color="#fff">
         <div style={{display: 'flex', alignItems: 'center', gap: 12, fontSize: 28, color: '#FFB07A'}}>
           <IconEye size={34} color="#FFB07A" />
           Yang terlihat oleh penyerang:

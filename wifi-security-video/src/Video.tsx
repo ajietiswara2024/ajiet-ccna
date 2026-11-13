@@ -8,7 +8,7 @@ import {Scene2Network} from './scenes/Scene2Network';
 import {Scene3EvilTwin} from './scenes/Scene3EvilTwin';
 import {Scene4Https} from './scenes/Scene4Https';
 import {Scene5Closing} from './scenes/Scene5Closing';
-import {ProgressBar, SceneFrame} from './ui/Overlay';
+import {SceneFrame} from './ui/Overlay';
 import {Subtitles} from './ui/Subtitles';
 
 export type VideoProps = {
@@ -49,7 +49,6 @@ export const WifiSecurityVideo: React.FC<VideoProps> = ({hasVoiceover, hasMusic,
         </Sequence>
       );
     })}
-    <ProgressBar />
     {showSubtitles ? <Subtitles /> : null}
     <AudioLayer hasVoiceover={hasVoiceover} hasMusic={hasMusic} />
   </AbsoluteFill>

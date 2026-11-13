@@ -51,12 +51,12 @@ export const Scene2Network: React.FC = () => {
     frame,
     [0, 40, 140, 280, 368, 410],
     [
-      [-0.65, 1.75, 6.0],
-      [-0.5, 1.95, 6.4],
-      [0.1, 2.5, 9.9],
-      [0.15, 2.55, 9.5],
-      [0.0, 4.2, 11.6],
-      [0.0, 4.25, 11.9],
+      [-0.65, 3.05, 6.0],
+      [-0.5, 3.25, 6.4],
+      [0.1, 3.8, 9.9],
+      [0.15, 3.85, 9.5],
+      [0.0, 5.5, 11.6],
+      [0.0, 5.55, 11.9],
     ],
   );
   const target = kf(
@@ -132,7 +132,7 @@ export const Scene2Network: React.FC = () => {
         <FlowLine points={routerToCloud} frame={frame} progress={prog(frame, T.cloud, 22)} color="#BFB5A3" radius={0.03} pulseColor={C.yellow} speed={0.016} />
         <Label3D text="Internet" variant="dark" position={[CLOUD_POS[0], CLOUD_POS[1] + 1.25, CLOUD_POS[2]]} opacity={prog(frame, T.cloud + 10, 12)} height={0.42} />
       </Stage3D>
-      <SceneTag index={SCENES.network.index} label={SCENES.network.tag} delay={10} />
+      <SceneTag index={SCENES.network.index} label={SCENES.network.tag} eyebrow={SCENES.network.eyebrow} title={SCENES.network.title} delay={10} />
     </AbsoluteFill>
   );
 };

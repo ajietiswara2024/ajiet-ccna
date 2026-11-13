@@ -1,7 +1,7 @@
 import {Environment, Lightformer} from '@react-three/drei';
 import {useThree} from '@react-three/fiber';
 import {ThreeCanvas} from '@remotion/three';
-import React from 'react';
+import React, {useMemo} from 'react';
 import {useVideoConfig} from 'remotion';
 import * as THREE from 'three';
 import {C} from '../config/theme';
@@ -14,12 +14,12 @@ import type {V3} from '../lib/anim';
 export const Studio: React.FC<{bg?: string; floor?: boolean; floorColor?: string}> = ({
   bg = C.bg,
   floor = true,
-  floorColor = '#E6DCCB',
+  floorColor = '#EAE6DF',
 }) => (
   <>
     <color attach="background" args={[bg]} />
-    <fog attach="fog" args={[bg, 13, 30]} />
-    <hemisphereLight args={['#FFF7EA', '#BFAE93', 0.85]} />
+    <fog attach="fog" args={[bg, 14, 34]} />
+    <hemisphereLight args={['#FFFFFF', '#CFC6B8', 1.0]} />
     <directionalLight
       castShadow
       position={[4.5, 9, 6]}
@@ -39,14 +39,35 @@ export const Studio: React.FC<{bg?: string; floor?: boolean; floorColor?: string
       <Lightformer form="rect" intensity={1.2} position={[6, 2, 0]} rotation-y={-Math.PI / 2} scale={[8, 4, 1]} color="#E6EEFF" />
       <Lightformer form="ring" intensity={1} position={[0, 3, 8]} scale={4} />
     </Environment>
-    {floor ? (
-      <mesh rotation-x={-Math.PI / 2} receiveShadow>
-        <planeGeometry args={[140, 140]} />
-        <meshStandardMaterial color={floorColor} roughness={0.95} />
-      </mesh>
-    ) : null}
+    {floor ? <TileFloor color={floorColor} /> : null}
   </>
 );
+
+/** Lantai ubin terang dengan nat tipis (gaya flat-lay studio) */
+const TileFloor: React.FC<{color: string}> = ({color}) => {
+  const tex = useMemo(() => {
+    const c = document.createElement('canvas');
+    c.width = c.height = 512;
+    const ctx = c.getContext('2d')!;
+    ctx.fillStyle = color;
+    ctx.fillRect(0, 0, 512, 512);
+    ctx.strokeStyle = 'rgba(120,108,90,0.42)';
+    ctx.lineWidth = 4;
+    ctx.strokeRect(0, 0, 512, 512);
+    const t = new THREE.CanvasTexture(c);
+    t.colorSpace = THREE.SRGBColorSpace;
+    t.wrapS = t.wrapT = THREE.RepeatWrapping;
+    t.repeat.set(70, 70);
+    t.anisotropy = 16;
+    return t;
+  }, [color]);
+  return (
+    <mesh rotation={[-Math.PI / 2, 0, 0.42]} receiveShadow>
+      <planeGeometry args={[140, 140]} />
+      <meshStandardMaterial map={tex} roughness={0.9} />
+    </mesh>
+  );
+};
 
 /** Kamera dikendalikan per-frame (deterministik) */
 export const CameraRig: React.FC<{position: V3; target: V3; fov?: number; roll?: number}> = ({
