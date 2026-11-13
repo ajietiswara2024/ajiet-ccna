@@ -257,6 +257,8 @@ export type WifiListOpts = {
   status?: string;
   statusColor?: string;
   markDiff?: number;
+  /** posisi X riak tap (px kanvas) */
+  tapX?: number;
   banner?: {title: string; body: string; color: string; t: number; icon: 'warn' | 'ok'};
 };
 
@@ -361,7 +363,7 @@ export const drawWifiList = (ctx: Ctx, o: WifiListOpts) => {
     if (isSel && o.tap !== undefined && o.tap > 0 && o.tap < 1) {
       ctx.fillStyle = hexA(o.statusColor ?? C.blue, 0.3 * (1 - o.tap));
       ctx.beginPath();
-      ctx.arc(250, cy, 30 + o.tap * 200, 0, Math.PI * 2);
+      ctx.arc(o.tapX ?? 250, cy, 30 + o.tap * 200, 0, Math.PI * 2);
       ctx.fill();
     }
     ctx.restore();

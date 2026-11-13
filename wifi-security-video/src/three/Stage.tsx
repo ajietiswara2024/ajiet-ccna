@@ -1,4 +1,6 @@
 import {Environment, Lightformer} from '@react-three/drei';
+import {DepthOfField, EffectComposer, ToneMapping} from '@react-three/postprocessing';
+import {ToneMappingMode} from 'postprocessing';
 import {useThree} from '@react-three/fiber';
 import {ThreeCanvas} from '@remotion/three';
 import React, {useMemo} from 'react';
@@ -87,14 +89,24 @@ export const CameraRig: React.FC<{position: V3; target: V3; fov?: number; roll?:
   return null;
 };
 
-/** Kanvas 3D standar untuk setiap scene */
-export const Stage3D: React.FC<{children: React.ReactNode; bg?: string; floor?: boolean; style?: React.CSSProperties}> = ({
-  children,
-  bg,
-  floor,
-  style,
-}) => {
+/**
+ * Kanvas 3D standar untuk setiap scene.
+ * `focus` = titik dunia yang tajam; area di depan/belakangnya di-blur (depth of field)
+ * seperti foto produk. Set `dof={false}` untuk mematikan (render lebih cepat).
+ */
+export const Stage3D: React.FC<{
+  children: React.ReactNode;
+  bg?: string;
+  floor?: boolean;
+  style?: React.CSSProperties;
+  focus?: V3;
+  blur?: number;
+  /** lebar zona tajam di sekitar titik fokus (satuan dunia) */
+  focusRange?: number;
+  dof?: boolean;
+}> = ({children, bg, floor, style, focus, blur = 2.2, focusRange = 3.2, dof = true}) => {
   const {width, height} = useVideoConfig();
+  const useDof = dof && ENABLE_DOF && focus !== undefined;
   return (
     <ThreeCanvas
       width={width}
@@ -102,11 +114,20 @@ export const Stage3D: React.FC<{children: React.ReactNode; bg?: string; floor?: 
       shadows="soft"
       dpr={1}
       style={{position: 'absolute', inset: 0, ...style}}
-      gl={{antialias: true, preserveDrawingBuffer: true, toneMapping: THREE.NeutralToneMapping, toneMappingExposure: 1.0}}
+      gl={{antialias: !useDof, preserveDrawingBuffer: true, toneMapping: THREE.NeutralToneMapping, toneMappingExposure: 1.0}}
       camera={{fov: 38, near: 0.1, far: 100, position: [0, 3, 9]}}
     >
       <Studio bg={bg} floor={floor} />
       {children}
+      {useDof ? (
+        <EffectComposer multisampling={4}>
+          <DepthOfField target={focus} worldFocusRange={focusRange} bokehScale={blur} />
+          <ToneMapping mode={ToneMappingMode.NEUTRAL} />
+        </EffectComposer>
+      ) : null}
     </ThreeCanvas>
   );
 };
+
+/** Matikan global bila ingin render cepat (mis. preview di komputer lambat) */
+export const ENABLE_DOF = true;

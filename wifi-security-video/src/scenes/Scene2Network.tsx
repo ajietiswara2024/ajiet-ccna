@@ -97,7 +97,7 @@ export const Scene2Network: React.FC = () => {
 
   return (
     <AbsoluteFill>
-      <Stage3D>
+      <Stage3D focus={target} focusRange={9} blur={1.6}>
         <CameraRig position={cam} target={target} fov={38} />
 
         {/* Smartphone */}

@@ -74,7 +74,7 @@ export const Label3D: React.FC<{
   if (opacity <= 0.001) return null;
   return (
     <sprite position={position} scale={[height * aspect, height, 1]} renderOrder={20}>
-      <spriteMaterial map={texture} transparent opacity={opacity} depthTest={false} depthWrite={false} toneMapped={false} />
+      <spriteMaterial map={texture} transparent opacity={opacity} depthTest={false} depthWrite toneMapped={false} alphaTest={0.4} />
     </sprite>
   );
 };

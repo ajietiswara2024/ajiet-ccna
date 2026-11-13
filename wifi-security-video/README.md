@@ -25,6 +25,13 @@ npm run still        # render satu frame (PNG) untuk cek cepat
 npm run typecheck    # cek TypeScript
 ```
 
+### Kualitas visual 3D
+- **Tangan realistis**: model rigged `public/models/hand-right.glb` (lisensi MIT). Pose jari dihitung dengan
+  forward kinematics di `src/three/RealHand.tsx`. Komposisi **HandLab** di Remotion Studio dipakai untuk mengecek pose.
+- **Depth of field** (blur latar ala foto produk) via `@react-three/postprocessing`. Atur per scene lewat
+  `<Stage3D focus={...} focusRange={...} blur={...}>`, atau matikan global dengan `ENABLE_DOF = false`
+  di `src/three/Stage.tsx` untuk render lebih cepat.
+
 ### Catatan render 3D (WebGL)
 - `remotion.config.ts` memakai renderer OpenGL **`swangle`** (software), agar bisa render di server tanpa GPU.
   Di komputer dengan GPU, ganti ke `'angle'` agar jauh lebih cepat.
@@ -45,7 +52,8 @@ wifi-security-video/
 │   │   ├── voiceover.mp3            ← narasi (sudah terpasang, sudah disinkronkan)
 │   │   ├── background-music.mp3     ← musik latar (placeholder buatan skrip)
 │   │   └── README.md
-│   └── fonts/                       ← Plus Jakarta Sans & JetBrains Mono (lokal, SIL OFL)
+│   ├── fonts/                       ← Plus Jakarta Sans & JetBrains Mono (lokal, SIL OFL)
+│   └── models/hand-right.glb        ← model tangan (MIT, WebXR Input Profiles)
 ├── audio-source/voiceover-original.mp3   ← voice-over asli sebelum diproses
 ├── scripts/
 │   ├── prepare-voiceover.sh         ← potong jeda awal + atur tempo voice-over
@@ -68,7 +76,8 @@ wifi-security-video/
 │   │   └── Scene5Closing.tsx        (46,9–60 s) Checklist aman, judul, kredit
 │   ├── three/                       ← model 3D buatan kode (tanpa aset eksternal)
 │   │   ├── Stage.tsx                (studio lighting, bayangan lembut, kamera)
-│   │   ├── Phone.tsx, Hand.tsx, Devices.tsx, Symbols.tsx, Cafe.tsx, Attacker.tsx
+│   │   ├── Phone.tsx, Devices.tsx, Symbols.tsx, Cafe.tsx, Attacker.tsx
+│   │   ├── RealHand.tsx             (tangan 3D realistis ter-rig + pose genggam HP)
 │   │   ├── Effects.tsx              (gelombang sinyal, aliran data, glow)
 │   │   └── Label3D.tsx, useCanvasTexture.ts
 │   ├── screens/draw.ts              ← UI layar HP (Canvas 2D → tekstur 3D)

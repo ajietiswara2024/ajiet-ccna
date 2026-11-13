@@ -61,7 +61,7 @@ const Packet: React.FC<{u: number; text: string; encrypted: boolean; seed: strin
   const p = curvePoint(PATH, u);
   return (
     <sprite position={[p[0], p[1] + 0.32, p[2]]} scale={[1.05, 0.3, 1]} renderOrder={15}>
-      <spriteMaterial map={tex} transparent opacity={opacity} depthTest={false} toneMapped={false} />
+      <spriteMaterial map={tex} transparent opacity={opacity} depthTest={false} depthWrite alphaTest={0.4} toneMapped={false} />
     </sprite>
   );
 };
@@ -120,7 +120,7 @@ export const Scene4Https: React.FC = () => {
 
   return (
     <AbsoluteFill>
-      <Stage3D>
+      <Stage3D focus={target} focusRange={9} blur={1.6}>
         <CameraRig position={cam} target={target} fov={38} />
 
         <Phone screen={screen} position={[PHONE_POS[0], PHONE_POS[1] + Math.sin(frame * 0.05) * 0.04, PHONE_POS[2]]} rotation={[-0.06, 0.42, 0.02]} scale={1.05} />

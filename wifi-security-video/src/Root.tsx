@@ -2,6 +2,7 @@ import React from 'react';
 import {Composition, staticFile} from 'remotion';
 import {AUDIO} from './config/audio';
 import {DURATION, FPS, HEIGHT, WIDTH} from './config/timeline';
+import {HandLab} from './HandLab';
 import {VideoProps, WifiSecurityVideo} from './Video';
 
 /** Cek apakah file audio ada di folder public/ */
@@ -15,6 +16,8 @@ const fileExists = async (path: string) => {
 };
 
 export const RemotionRoot: React.FC = () => (
+  <>
+  <Composition id="HandLab" component={HandLab} durationInFrames={60} fps={FPS} width={720} height={720} />
   <Composition
     id="WifiSecurity"
     component={WifiSecurityVideo}
@@ -28,4 +31,5 @@ export const RemotionRoot: React.FC = () => (
       return {props: {...props, hasVoiceover, hasMusic}};
     }}
   />
+  </>
 );

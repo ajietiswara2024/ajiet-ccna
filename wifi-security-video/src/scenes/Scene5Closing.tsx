@@ -66,7 +66,7 @@ export const Scene5Closing: React.FC = () => {
   return (
     <AbsoluteFill style={{opacity: fade}}>
       <AbsoluteFill style={{opacity: 1 - 0.78 * outro, filter: outro > 0 ? `blur(${outro * 12}px)` : undefined}}>
-        <Stage3D>
+        <Stage3D focus={target} focusRange={4.5}>
           <CameraRig position={cam} target={target} fov={38} />
           <Phone screen={screen} position={[0, 2.0 + Math.sin(frame * 0.05) * 0.04, 0.6]} rotation={[-0.05, Math.sin(frame * 0.02) * 0.12, 0]} scale={1.15} />
           <group position={[0.85, 1.25 + Math.sin(frame * 0.06 + 1) * 0.06, 1.25]} scale={0.62 * shieldPop} rotation={[0, -0.45, 0.08]}>

@@ -5,7 +5,7 @@ import {C, FONT} from '../config/theme';
 import {CLAMP, EASE, kf, mix, mixV, prog, V3, window01} from '../lib/anim';
 import {drawLockScreen, drawWifiList, SH, SW, WifiItem} from '../screens/draw';
 import {CafeBackdrop, CafeTable, CoffeeCup, PendantLamp, WifiTentCard} from '../three/Cafe';
-import {Hand} from '../three/Hand';
+import {GripHand} from '../three/RealHand';
 import {Phone} from '../three/Phone';
 import {CameraRig, Stage3D} from '../three/Stage';
 import {useCanvasTexture} from '../three/useCanvasTexture';
@@ -53,7 +53,7 @@ export const Scene1Opening: React.FC = () => {
   phonePos[1] += idle;
   const phoneRot = mixV(PHONE_TABLE_ROT, PHONE_HELD_ROT, liftC);
   // tangan di koordinat lokal HP: datang dari bawah-kanan (di atas meja), lalu masuk ke belakang HP
-  const handApproach = mixV([1.4, -3.2, 0.6], [0.05, -0.15, 0.32], handIn);
+  const handApproach = mixV([1.4, -3.4, 0.95], [0.05, -0.2, 0.72], handIn);
   const handLocal = mixV(handApproach, [0, 0, 0], liftC);
   const thumb = interpolate(frame, [T.tap - 10, T.tap, T.tap + 8, T.tap + 20], [0, 1, 1, 0.1], {...CLAMP, easing: EASE});
 
@@ -78,6 +78,7 @@ export const Scene1Opening: React.FC = () => {
       selected: sel,
       selectT: prog(frame, T.tap, 6),
       tap: interpolate(frame, [T.tap, T.tap + 18], [0, 1], CLAMP),
+      tapX: 470,
       status: frame >= T.connecting ? (connected ? 'Terhubung' : 'Menghubungkan…') : undefined,
       statusColor: C.blue,
     });
@@ -113,7 +114,7 @@ export const Scene1Opening: React.FC = () => {
 
   return (
     <AbsoluteFill style={{background: C.bg}}>
-      <Stage3D>
+      <Stage3D focus={target}>
         <CameraRig position={cam} target={target} fov={38} />
         <CafeBackdrop position={[0, 0, -3.2]} />
         <CafeTable />
@@ -121,7 +122,7 @@ export const Scene1Opening: React.FC = () => {
         <CoffeeCup frame={frame} position={[-0.75, 1.0, 0.2]} />
         <WifiTentCard position={[0.85, 1.0, -0.45]} rotation-y={-0.35} />
         <Phone screen={screen} position={phonePos} rotation={phoneRot}>
-          {handIn > 0 ? <Hand thumb={thumb} position={handLocal} /> : null}
+          {handIn > 0 ? <GripHand thumb={thumb} position={handLocal} /> : null}
         </Phone>
       </Stage3D>
 
