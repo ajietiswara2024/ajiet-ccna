@@ -23,3 +23,7 @@ Setiap folder berisi:
 
 > “Belajar jaringan itu seperti membangun jembatan. Stabil, rapi, dan tahan banting.”
 
+
+
+## 🎬 Video Edukasi: WI-FI GRATIS, TAPI AMAN NGGAK?
+Proyek video Remotion (React + Three.js) tentang keamanan Wi-Fi publik ada di folder [`wifi-security-video/`](wifi-security-video/README.md).

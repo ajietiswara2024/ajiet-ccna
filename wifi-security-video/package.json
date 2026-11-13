@@ -1,0 +1,31 @@
+{
+  "name": "wifi-gratis-aman-nggak",
+  "version": "1.0.0",
+  "description": "Video edukasi keamanan Wi-Fi publik (Remotion + React Three Fiber)",
+  "private": true,
+  "scripts": {
+    "dev": "remotion studio",
+    "render": "remotion render WifiSecurity out/wifi-gratis-aman-nggak.mp4",
+    "still": "remotion still WifiSecurity out/preview.png --frame=600",
+    "music": "python3 scripts/generate-placeholder-music.py",
+    "voiceover": "bash scripts/prepare-voiceover.sh",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@react-three/drei": "^10.7.6",
+    "@react-three/fiber": "^9.4.0",
+    "@remotion/cli": "^4.0.543",
+    "@remotion/fonts": "^4.0.543",
+    "@remotion/media-utils": "^4.0.543",
+    "@remotion/three": "^4.0.543",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "remotion": "^4.0.543",
+    "three": "^0.180.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.2",
+    "@types/three": "^0.180.0",
+    "typescript": "^5.9.3"
+  }
+}
