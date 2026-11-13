@@ -1,6 +1,5 @@
 node_modules
-out/stills
-out/*.png
-out/*.log
-out/_*
+# hasil render & file kerja (video final ditambahkan eksplisit)
+out/*
+!out/.gitkeep
 .DS_Store
