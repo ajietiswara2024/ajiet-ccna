@@ -124,11 +124,11 @@ export const Scene4Https: React.FC = () => {
         <CameraRig position={cam} target={target} fov={38} />
 
         <Phone screen={screen} position={[PHONE_POS[0], PHONE_POS[1] + Math.sin(frame * 0.05) * 0.04, PHONE_POS[2]]} rotation={[-0.06, 0.42, 0.02]} scale={1.05} />
-        <Label3D text="HP kamu" position={[PHONE_POS[0] - 0.15, PHONE_POS[1] + 1.12, PHONE_POS[2] + 0.2]} height={0.28} opacity={prog(frame, 14, 12)} />
+        <Label3D text="HP kamu" position={[PHONE_POS[0] + 0.2, PHONE_POS[1] + 1.12, PHONE_POS[2] + 0.2]} height={0.28} opacity={window01(frame, 14, 26, T.spy - 10, T.spy)} />
 
         <Pedestal position={SERVER_POS} height={0.25} radius={1.0} />
         <Server position={[SERVER_POS[0], 0.25, SERVER_POS[2]]} rotation-y={-0.35} frame={frame} />
-        <Label3D text="Server situs" position={[SERVER_POS[0], 2.85, SERVER_POS[2] - 0.2]} height={0.28} opacity={prog(frame, 24, 12)} />
+        <Label3D text="Server situs" position={[SERVER_POS[0] + 0.15, 0.62, SERVER_POS[2] + 0.75]} height={0.28} opacity={prog(frame, 24, 12)} />
 
         <FlowLine points={PATH} frame={frame} progress={prog(frame, T.press + 4, 20)} color="#CDBFA9" radius={0.03} pulseColor={secure > 0.5 ? C.yellow : C.blue} pulses={5} speed={0.0075} />
 
@@ -143,7 +143,7 @@ export const Scene4Https: React.FC = () => {
             ))}
           </group>
         ) : null}
-        <Label3D text="HTTPS · Terenkripsi" variant="blue" icon="dot" position={[mid[0] - 0.2, mid[1] - 0.85, mid[2] + 0.2]} height={0.3} opacity={prog(frame, T.encrypt, 12)} />
+        <Label3D text="HTTPS · Terenkripsi" variant="blue" icon="dot" position={[mid[0] - 0.2, mid[1] - 0.85, mid[2] + 0.2]} height={0.3} opacity={window01(frame, T.encrypt, T.encrypt + 12, T.spy - 10, T.spy)} />
 
         <group position={[mid[0], mid[1] + 1.0, mid[2] + 0.2]} scale={0.5 * lockPop} rotation-y={Math.sin(frame * 0.04) * 0.25}>
           <Padlock closed={lockClose} shine={lockClose} />

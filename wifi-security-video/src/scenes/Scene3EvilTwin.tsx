@@ -52,7 +52,9 @@ export const Scene3EvilTwin: React.FC = () => {
   const fakeX = mix(0, FAKE_X, split);
   const evil = prog(frame, T.evilTwin, 18);
   const glitch = frame > T.evilTwin && frame < T.evilTwin + 26 && Math.floor(frame / 2) % 3 === 0 ? 0.06 : 0;
-  const fakeLed = mixColor(C.blue, C.orange, evil);
+  // Transisi warna lewat abu netral (hindari ungu saat biru -> oranye)
+  const evilColor = evil < 0.5 ? mixColor(C.blue, '#D9D2C7', evil * 2) : mixColor('#D9D2C7', C.orange, evil * 2 - 1);
+  const fakeLed = evilColor;
   const attacker = pop(frame, fps, T.attacker);
   const phoneIn = spring({frame: frame - T.phoneIn, fps, config: {damping: 16, mass: 0.9, stiffness: 80}});
   const reality = prog(frame, T.reality, 14);
@@ -136,7 +138,6 @@ export const Scene3EvilTwin: React.FC = () => {
           <AccessPoint position={[0, PED_H, 0]} led={C.blue} />
           <WifiIcon position={[0, apY + 1.05, 0]} scale={0.5} level={3} />
           <Label3D text={REAL_SSID} position={[0, apY + 1.75, 0]} height={0.3} opacity={prog(frame, T.compare, 12) * (1 - phoneIn * 0.0)} mono />
-          <Label3D text="ASLI" variant="blue" icon="check" position={[0, 0.45, 0.95]} height={0.3} opacity={prog(frame, T.phoneIn, 14)} />
         </group>
 
         {/* AP PALSU (Evil Twin) */}
@@ -144,9 +145,8 @@ export const Scene3EvilTwin: React.FC = () => {
           <Pedestal height={PED_H} radius={0.8} color={mixColor(C.cream, '#F3DCC8', evil)} />
           <AccessPoint position={[0, PED_H, 0]} led={fakeLed} ledPower={1 + evil * 0.5} />
           <Glow position={[0, apY, 0.3]} size={1.6} color={C.orange} opacity={0.35 * evil * (0.7 + 0.3 * Math.sin(frame * 0.3))} />
-          <WifiIcon position={[0, apY + 1.05, 0]} scale={0.5} level={3} color={mixColor(C.blue, C.orange, evil)} />
+          <WifiIcon position={[0, apY + 1.05, 0]} scale={0.5} level={3} color={evilColor} />
           <Label3D text={FAKE_SSID} position={[0, apY + 1.75, 0]} height={0.3} opacity={prog(frame, T.compare, 12)} mono />
-          <Label3D text="PALSU" variant="orange" icon="cross" position={[0, 0.45, 0.95]} height={0.3} opacity={prog(frame, T.phoneIn + 6, 14)} />
         </group>
 
         {/* Penyerang di belakang AP palsu */}

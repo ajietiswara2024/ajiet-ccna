@@ -69,11 +69,11 @@ export const Scene5Closing: React.FC = () => {
         <Stage3D focus={target} focusRange={4.5}>
           <CameraRig position={cam} target={target} fov={38} />
           <Phone screen={screen} position={[0, 2.0 + Math.sin(frame * 0.05) * 0.04, 0.6]} rotation={[-0.05, Math.sin(frame * 0.02) * 0.12, 0]} scale={1.15} />
-          <group position={[0.85, 1.25 + Math.sin(frame * 0.06 + 1) * 0.06, 1.25]} scale={0.62 * shieldPop} rotation={[0, -0.45, 0.08]}>
+          <group position={[0.6, 1.3 + Math.sin(frame * 0.06 + 1) * 0.06, 1.0]} scale={0.42 * shieldPop} rotation={[0, -0.45, 0.08]}>
             <Shield check={prog(frame, 16, 14)} />
           </group>
-          <Glow position={[1.05, 1.25, 1.0]} size={2} color={C.blue} opacity={0.25 * shieldPop} />
-          <group position={[-0.82, 2.75 + Math.sin(frame * 0.05 + 2) * 0.06, 0.8]} scale={0.5 * wifiPop} rotation-y={0.35}>
+          <Glow position={[0.6, 1.3, 0.8]} size={2} color={C.blue} opacity={0.25 * shieldPop} />
+          <group position={[-0.92, 1.75 + Math.sin(frame * 0.05 + 2) * 0.06, 0.6]} scale={0.42 * wifiPop} rotation-y={0.35}>
             <WifiIcon level={3} />
           </group>
           <group position={[0.85, 2.85 + Math.sin(frame * 0.055) * 0.06, 0.4]} scale={0.34 * lockPop} rotation-y={-0.4 + Math.sin(frame * 0.03) * 0.2}>
