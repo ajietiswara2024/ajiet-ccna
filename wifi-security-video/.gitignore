@@ -1,0 +1,5 @@
+node_modules
+# hasil render & file kerja (video final ditambahkan eksplisit)
+out/*
+!out/.gitkeep
+.DS_Store
