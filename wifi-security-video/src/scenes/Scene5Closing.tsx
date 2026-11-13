@@ -73,7 +73,7 @@ export const Scene5Closing: React.FC = () => {
             <Shield check={prog(frame, 16, 14)} />
           </group>
           <Glow position={[0.6, 1.3, 0.8]} size={2} color={C.blue} opacity={0.25 * shieldPop} />
-          <group position={[-0.92, 1.75 + Math.sin(frame * 0.05 + 2) * 0.06, 0.6]} scale={0.42 * wifiPop} rotation-y={0.35}>
+          <group position={[-0.76, 1.6 + Math.sin(frame * 0.05 + 2) * 0.06, 0.6]} scale={0.38 * wifiPop} rotation-y={0.35}>
             <WifiIcon level={3} />
           </group>
           <group position={[0.85, 2.85 + Math.sin(frame * 0.055) * 0.06, 0.4]} scale={0.34 * lockPop} rotation-y={-0.4 + Math.sin(frame * 0.03) * 0.2}>
